@@ -1,1 +1,34 @@
 non-published-docs/
+
+# M0-01: local/runtime artifacts (never commit secrets or generated output)
+node_modules/
+apps/*/node_modules/
+apps/*/.next/
+apps/*/.turbo/
+apps/*/dist/
+**/next-env.d.ts
+*.tsbuildinfo
+coverage/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+.venvs/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Env and local data
+.env
+.env.local
+*.local
+data/
+volumes/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/*

@@ -1,0 +1,30 @@
+{
+  "name": "nerveops",
+  "private": true,
+  "version": "0.1.0",
+  "description": "NerveOps — M0-01 executable foundation shells (no M1/M2 domain behavior)",
+  "type": "commonjs",
+  "packageManager": "npm@11.5.1",
+  "engines": {
+    "node": ">=20"
+  },
+  "workspaces": [
+    "apps/web",
+    "apps/control-plane"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace @nerveops/web && npm run build --workspace @nerveops/control-plane && python3 -m compileall apps/runtime-api apps/runtime-worker apps/celery-worker",
+    "lint": "eslint apps/web apps/control-plane",
+    "type-check": "npm run type-check --workspace @nerveops/web && npm run type-check --workspace @nerveops/control-plane && python3 scripts/check-python-shells.py",
+    "test": "npm run test --workspace @nerveops/web --if-present && npm run test --workspace @nerveops/control-plane --if-present && python3 -m pytest tests/m0_01_shell_contract -q",
+    "integration-test": "bash scripts/integration-shell-check.sh",
+    "dev:web": "npm run dev --workspace @nerveops/web",
+    "dev:control-plane": "npm run start:dev --workspace @nerveops/control-plane"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.12.2",
+    "@typescript-eslint/parser": "^8.12.2",
+    "eslint": "^9.12.0",
+    "typescript": "^5.6.3"
+  }
+}
