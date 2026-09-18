@@ -277,11 +277,30 @@ If a technology stops serving a frozen requirement, it gets removed — portfoli
 
 ## Getting started
 
-> Not runnable yet. M0 (#1–#4) will establish `git clone && docker compose up`, owned migrations, health checks, and baseline CI. Until then, start with the blueprint and issues.
+> M0-01 (#1) is implemented: five executable shells (Web, Control Plane, Runtime API,
+> runtime-worker, Celery worker) with build/start entrypoints and operability probes.
+> Owned migrations (#2), Compose topology (#3), and deterministic harness/CI (#4) are
+> still open — do not claim deployment, tenant isolation, or runtime safety.
 
-1. Read `issues design/1. NerveOps Blueprint.md`.
-2. Read the dependency plan + complete issue plan for execution order.
-3. Pick issues in dependency order (M0 first, then M1/M2 toward Gate A). Do not claim downstream acceptance before its gate.
-4. Every state-adding issue must use its schema owner, carry workspace/version identity, provide migration + compatibility test, extend audit/traces, and add deterministic tests to the #4 harness.
+1. Read the frozen blueprint and issue plan (see Documentation map below).
+2. Read `docs/repo-layout.md`, `docs/local-shells.md`, `docs/config-contract.md`,
+   and `docs/commands.md` for layout, shell commands, config names, and conventions.
+3. Install and run shells independently (no DB/Redis/model needed):
+
+```text
+npm install
+pip install -r apps/runtime-api/requirements.txt
+pip install -r apps/runtime-worker/requirements.txt
+pip install -r apps/celery-worker/requirements.txt
+
+npm run build
+npm run lint
+npm run type-check
+npm run test
+npm run integration-test
+```
+
+4. Pick issues in dependency order (M0 first, then M1/M2 toward Gate A). Do not claim downstream acceptance before its gate.
+5. Every state-adding issue must use its schema owner, carry workspace/version identity, provide migration + compatibility test, extend audit/traces, and add deterministic tests to the #4 harness.
 
 If a change would alter a product requirement, invariant, authority boundary, execution semantic, tenant boundary, approval contract, or side-effect safety rule: stop and raise `BLUEPRINT AMENDMENT REQUIRED`.
